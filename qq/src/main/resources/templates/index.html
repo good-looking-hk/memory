@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>迷你QQ首页</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/css/contextMenu.css" />
+<body>
+<style>
+    #main {
+        padding-top: 20px;
+        padding-left: 50px;
+        font-size: 16px;
+    }
+    #main a {
+        color: red;
+    }
+    #main ul {
+        margin: 5px 20px 5px 20px;
+    }
+</style>
+<div id="main">
+    技术实现：
+    <ul>
+        <li>1.以市面主流的<a href="https://www.baidu.com/s?ie=UTF-8&wd=spring%20boot" target="_blank">Spring Boot</a>
+            作为后台框架，搭建完善的后台服务接口</li>
+        <li>2.后端数据库采用新型技术<a href="https://www.baidu.com/s?ie=UTF-8&wd=JPA" target="_blank">JPA</a>（基于Hibernate的一种技术），以实现更简单高效的数据库操作</li>
+        <li>3.以市面上主流的前后端分离作为规范，前端使用<a href="https://www.baidu.com/s?ie=UTF-8&wd=Layui" target="_blank">Layui</a>作为前端框架</li>
+        <li>4.采用主流的缓存工具<a href="https://www.baidu.com/s?ie=UTF-8&wd=Redis" target="_blank">Redis</a>作为缓存</li>
+        <li>5.页面层摒弃传统的JSP，而采用新型技术<a href="https://www.baidu.com/s?ie=UTF-8&wd=Thymeleaf" target="_blank">
+            Thymeleaf</a>作为视图展现（由于大部分采用前后端分离，这个用得并不多）</li>
+        <li>6.整体技术栈为：spring boot + jpa + mysql + redis + layui + html/js/css</li>
+    </ul>
+    项目说明：
+    <ul>
+        <li>1.本项目历时2个月有余，期间查阅/学习了大量书籍、大量官方文档、大量博客以及大量别人的源代码，学到了很多很多东西</li>
+        <li>2.经程序不完全统计，本项目共包含Java代码4000行，JS代码1000行，HTML + CSS代码若干</li>
+        <li>3.开发环境：IDEA + Tomcat + Mysql + Win10</li>
+    </ul>
+    已实现功能：
+    <ul>
+        <li>1.个人信息的查看/修改 | 登录/注册</li>
+        <li>2.在线状态切换</li>
+        <li>3.实时在线状态监听</li>
+        <li>4.好友在线聊天</li>
+        <li>5.上线通知</li>
+        <li>6.离线消息接受</li>
+        <li>7.查找好友 | 添加好友 | 同意好友申请 | 拒绝好友申请</li>
+        <li>8.历史信息查看/消息盒子</li>
+        <li>9.聊天表情、音效提示、皮肤切换、精美界面等，等你来尝试</li>
+        <li>10.更多功能有待开发，敬请期待....</li>
+    </ul>
+    <p>点击这里<a href="/logout">退出登录</a></p>
+    我想说的话：
+    <ul>
+        <li>1.暂时没有做群管理那块，太麻烦了，现在已经够用了</li>
+        <li>2.整体来说，这个项目难度还是有的，使用到的技术也多，不过没有用太过高深的，都是浅尝辄止</li>
+        <li>3.答辩够用了，老师也不会为难，但你自己也要搞懂基本的流程，不要出风头，最后一批再给老师看</li>
+        <li>4.参考了别人的前端代码，但后端都是独立编写的，有什么不懂再问，最好少问，春招事多，先百度谷歌一个小时再说</li>
+        <li>5.自己多走走代码，通一个点，就一通百通了，多debug下，看下别人的博客</li>
+    </ul>
+    <p style="font-size:14px">ps:你自由发挥--写于2020-20-20</p>
+    <input type="hidden" id="userId" th:value="${session.user.userId}"/>
+</div>
+<script src="/layui/layui.js"></script>
+<script src="/js/im.js"></script>
+</body>
+</html>

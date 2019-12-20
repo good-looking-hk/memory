@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>小桑音乐</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <link rel="stylesheet" href="/aplayer/APlayer.min.css"/>
+    <style>
+        .layui-col-md2 {
+            width: 20% !important;
+        }
+        #searcher {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 68px;
+        }
+        #my-carousel img:hover {
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="fly-header">
+    <div class="main-container3">
+        <a class="fly-logo" href="/">
+            <img class="log-img" src="" alt="">
+        </a>
+        <ul class="layui-nav fly-nav layui-hide-xs" id="nav-title">
+            <li class="layui-nav-item"><a href="/" target="_blank">首页</a></li>
+            <li class="layui-nav-item"><a href="/music/my">我的音乐</a></li>
+            <li class="layui-nav-item"><a href="/liuyan/all" target="_blank">留言板</a></li>
+            <li id="searcher"><input type="tel" name="phone" lay-verify="required" placeholder="输入你想听的歌/歌手" autocomplete="off" class="layui-input"></li>
+            <button class="layui-btn layui-btn-primary" onclick="search()">查找</button>
+        </ul>
+        <ul th:if="${session.user == null}" class="layui-nav fly-nav-user">
+            <li class="layui-nav-item">
+                <a href="#" onclick="login()">登录</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="#" onclick="register()">注册</a>
+            </li>
+        </ul>
+        <ul th:if="${session.user != null}" class="layui-nav fly-nav-user">
+            <li class="layui-nav-item">
+                <a href="/manage" id="userD" target="_blank" th:text="欢迎， + ${session.user.username}"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="#" onclick="logout()">注销</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-carousel" id="my-carousel" style="margin-top:10px;">
+    <div carousel-item>
+        <div><img src="/img/lunbo/爱情买卖.jpg" width="100%" height="100%" onclick="window.open('/music/search?name=爱情买卖')"></div>
+        <div><img src="/img/lunbo/错错错.jpg" width="100%" height="100%" onclick="window.open('/music/search?name=错错错')"></div>
+    </div>
+</div>
+<div class="content-container1">
+    <div class="wrap-content">
+        <div class="wrap-content-title">
+            <p class="wrap-content-title-p">
+                <span class="wrap-content-title-span"></span>热门推荐<span
+                    class="wrap-content-title-span"></span>
+            </p>
+        </div>
+        <div class="layui-row">
+            <div class="layui-col-md2 person-show"  th:each="music:${list}" th:id="${music.id}">
+                <img th:src="${'/img/' + music.id + '.png'}" height="100%" width="100%">
+                <p th:attr="data-id=${music.id},data-name=${music.name},data-author=${music.author}">
+                    <span th:text="${music.author + '-' + music.name}"></span><span class="likeM">收藏</span> | <span class="playM">播放</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-container1">
+    <div class="wrap-content yqlj">
+        <ul class="yqljul">
+            <li>友情链接：</li>
+            <li><a href="http://www.baotao.com" title="淘宝店铺" target="_blank">QQ音乐</a></li>
+            <li><a href="http://www.jingdong.com" title="京东店铺" target="_blank">网易云音乐</a></li>
+            <li><a href="http://www.33.com" title="22" target="_blank">酷狗音乐</a></li>
+            <li><a href="http://www.44.com" title="33" target="_blank">酷我音乐</a></li>
+            <li><a href="http://www.55.com/" title="44" target="_blank">合作伙伴</a></li>
+        </ul>
+    </div>
+</div>
+<div id="loginDiv" class="login-container" style="width: 350px;margin: 0 20px;" hidden>
+    <div class="fly-panel fly-panel-user">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title">
+                <li class="layui-this">登录</li>
+                <li><a href="#" onclick="register()">注册</a></li>
+            </ul>
+            <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-form">
+                        <form method="post">
+                            <div class="layui-form-item">
+                                <label for="L_email" class="layui-form-label">手机</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="L_email" name="phone" required lay-verify="phone"
+                                           autocomplete="off" placeholder="请输入手机号" class="layui-input" value="15197479670">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label for="L_pass" class="layui-form-label">密码</label>
+                                <div class="layui-input-block">
+                                    <input type="password" id="L_pass" name="password" required lay-verify="required"
+                                           autocomplete="off" placeholder="请输入密码" class="layui-input" value="test">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="login">立即登录</button>
+                                    <span style="padding-left:20px;">
+                  <a href="#" onclick="register()">没有账号？</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="registerDiv" class="login-container" style="width: 350px;margin: 0 20px;" hidden>
+    <div class="fly-panel fly-panel-user">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title">
+                <li><a href="#" onclick="login()">登录</a></li>
+                <li class="layui-this">注册</li>
+            </ul>
+            <div class="layui-form layui-tab-content" style="padding: 20px 0;">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-form">
+                        <form method="post">
+                            <div class="layui-form-item">
+                                <label for="L_email1" class="layui-form-label">手机</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="phone" id="L_email1" required lay-verify="phone"
+                                           autocomplete="off"
+                                           placeholder="请输入手机号（不能二次修改）" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label for="L_username" class="layui-form-label">昵称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="L_username" name="username" required lay-verify="required"
+                                           autocomplete="off" placeholder="我们该怎么称呼您" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label for="L_pass1" class="layui-form-label">密码</label>
+                                <div class="layui-input-block">
+                                    <input type="password" id="L_pass1" name="password" required lay-verify="required"
+                                           autocomplete="off"
+                                           placeholder="6到16个字符" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label for="L_repass" class="layui-form-label">确认</label>
+                                <div class="layui-input-block">
+                                    <input type="password" id="L_repass" name="repeat" required lay-verify="required"
+                                           autocomplete="off" placeholder="确认密码" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="register">立即注册</button>
+                                <span style="padding-left:20px;">
+                  <a href="#" onclick="login()">已有账号？</a>
+                                    </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="aplayer" style="position: fixed;bottom: 0;margin: 0;background-color: white;width: 100%;"></div>
+<script src="/libs/jquery/dist/jquery.min.js"></script>
+<script src="/libs/layui/layui.js"></script>
+<script>
+    var user = $('#userD').text();
+    var loginFlag = false;
+    if (user === '') {
+        // 用户未登录
+        loginFlag = false;
+    } else {
+        loginFlag = true;
+    }
+    function liuyan() {
+        if (!loginFlag) {
+            layer.msg("请先登录", {icon: 2, time: 1500});
+            return;
+        }
+        layer.prompt({
+            formType: 2,
+            title: '请输入您的留言',
+            area: ['400px', '250px'] //自定义文本域宽高
+        }, function (value, index, elem) {
+            $.post('/liuyan/add', {content: value}, function (response) {
+                if (response.code == 200) {
+                    layer.msg('留言成功', {
+                        icon: 6,
+                        time: 1500,
+                    });//默认3000
+                } else {
+                    layer.msg(response.msg, {icon: 2, time: 1500});
+                }
+            });
+            layer.close(index);
+        });
+    }
+
+    layui.use(['carousel', 'element', 'layer', 'form'], function () {
+        var carousel = layui.carousel;
+        var element = layui.element;
+        var layer = layui.layer;
+        var form = layui.form;
+        carousel.render({
+            elem: '#my-carousel',
+            width: '100%', //设置容器宽度
+            height: '640px',
+            autoplay: true,
+            interval: 4000,
+            anim: 'fade',
+            arrow: 'always' //始终显示箭头
+        });
+        form.on('submit(register)', function (data) {
+            if (data.field.password != data.field.repeat) {
+                layer.msg("两次密码输入不一致");
+                return false;
+            }
+            $.post('/register', data.field, function (response) {
+                if (response.code == 200) {
+                    layer.msg('注册成功，正在跳转至登录页面', {
+                        icon: 6,
+                        time: 1500,
+                        end: function () {
+                            $("#registerDiv input").each(function () {
+                                $(this).val("");
+                            });
+                            login();
+                        }
+                    });//默认3000
+                } else {
+                    layer.msg(response.msg, {icon: 2, time: 1500});
+                }
+            });
+            return false;
+        });
+        form.on('submit(login)', function (data) {
+            $.post('/login', data.field, function (response) {
+                if (response.code == 200) {
+                    $(".fly-nav-user li").eq(0).html('<a href="/manage" target="_blank">欢迎，' + response.username + '</a>');
+                    $(".fly-nav-user li").eq(1).html('<a href="#" onclick="logout()">注销</a>');
+                    layer.msg('登录成功', {
+                        icon: 6, time: 1500,
+                        end: function () {
+                            loginFlag = true;
+                            layer.closeAll('page');
+                        }
+                    });
+                } else {
+                    layer.msg(response.msg, {icon: 2, time: 1500});
+                }
+            }, "json");
+            return false;
+        });
+    });
+
+    function login() {
+        layer.closeAll('page');
+        $('#loginDiv .layui-tab-title li').eq('0').addClass('layui-this');
+        $('#loginDiv .layui-tab-title li').eq('1').removeClass('layui-this');
+        layer.open({
+            type: 1,
+            title: '登录页面',
+            area: '400',
+            content: $('#loginDiv')
+        });
+    }
+
+    function register() {
+        layer.closeAll('page');
+        $('#registerDiv .layui-tab-title li').eq('1').addClass('layui-this');
+        $('#registerDiv .layui-tab-title li').eq('0').removeClass('layui-this');
+        layer.open({
+            type: 1,
+            title: '注册界面',
+            area: '400',
+            content: $('#registerDiv')
+        });
+    }
+
+    function logout() {
+        $.post('/logout', function (response) {
+            if (response.code == 200) {
+                $(".fly-nav-user li").eq(0).html('<a href="#" onclick="login()">登录</a>');
+                $(".fly-nav-user li").eq(1).html('<a href="#" onclick="register()">注册</a>');
+                layer.msg('注销成功', {icon: 6, time: 1500});//默认3000
+            }
+        });
+    }
+
+    function search() {
+        var key = $("#searcher input").val();
+        if (key == "") {
+            return;
+        }
+        window.location.href="/music/search?name=" + key;
+    }
+</script>
+<script>
+    $("#nav-title li").eq(0).addClass('layui-this');
+</script>
+<script src="/aplayer/APlayer.min.js"></script>
+<script>
+    var ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        fixed: false,// 迷你模式
+        autoplay: true,// false
+        loop: 'one', //'all', 'one', 'none'
+        order: 'list',// list/random
+        preload: 'auto',//auto/none
+        volume: 0.5,
+        mutex: true,
+        listFolded: true,
+        listMaxHeight: 80,
+        lrcType: 3
+    });
+    $(function () {
+       $(".playM").click(function () {
+           var p = $(this).parent();
+           var id = p.data('id');
+           var name = p.data('name');
+           var author = p.data('author');
+           ap.list.clear();
+           ap.list.add([{
+               name: name,
+               artist: author,
+               url: '/music/' + id + '.mp3',
+               cover: '/img/' + id + '.png',
+               lrc: '/lrc/' + id + '.lrc'
+               // theme: '#ebd0c2'
+           }]);
+           ap.play();
+       });
+    });
+    $(function () {
+        $(".likeM").click(function () {
+            if (!loginFlag) {
+                layer.msg("请先登录", {icon: 2, time: 1500});
+                return;
+            }
+            var p = $(this).parent();
+            var id = p.data('id');
+            $.post("/music/like", {id:id}, function (res) {
+                if (res.code === 200) {
+                    layer.msg("收藏成功");
+                } else {
+                    layer.msg("收藏失败");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

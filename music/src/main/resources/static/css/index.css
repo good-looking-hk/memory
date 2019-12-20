@@ -1,0 +1,378 @@
+blockquote, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400
+}
+
+a:active, a:hover {
+    outline: 0
+}
+
+img {
+    border: none
+}
+
+li {
+    list-style: none
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+h4, h5, h6 {
+    font-size: 100%
+}
+
+button, input, optgroup, option, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0
+}
+
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word
+}
+
+body {
+    line-height: 24px;
+    font: 14px Helvetica Neue, Helvetica, PingFang SC, \5FAE\8F6F\96C5\9ED1, Tahoma, Arial, sans-serif
+}
+
+hr {
+    height: 1px;
+    margin: 10px 0;
+    border: 0;
+    clear: both
+}
+
+a {
+    color: #333;
+    text-decoration: none
+}
+
+a:hover {
+    color: #777
+}
+
+.layui-row p {
+    color: #888;
+    line-height: 2.2em;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 2px;
+}
+
+.fly-header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    width: 100%;
+    height: 68px;
+    background: #fff;
+    border-radius: 0;
+    -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, .1)
+}
+
+.main-container3 {
+    width: 1100px;
+    margin: 0 auto;
+    position: relative
+}
+
+.fly-logo {
+    position: absolute;
+    top: 4px;
+}
+
+.log-img {
+    padding-left: 10px;
+    height: 60px
+}
+
+.fly-header .layui-nav {
+    position: absolute;
+    color: black;
+    border-radius: 2px;
+    font-size: 16px;
+    padding: 0;
+    background: 0 0
+}
+
+.fly-nav {
+    margin-left: 100px;
+}
+
+.fly-nav-user {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.layui-nav .layui-nav-item {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 68px;
+
+}
+
+.layui-nav .layui-nav-item a {
+    font-size: 16px;
+    display: block;
+    padding: 0 20px;
+    color: #333;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+
+.layui-nav .layui-nav-item a:hover {
+    font-weight: bold;
+    color: green;
+}
+
+.layui-this {
+    font-weight:bold;
+    color: green;
+}
+
+.content-container1 {
+    width: 100%;
+    background-color: white;
+}
+
+.content-container2 {
+    width: 100%;
+    background-color: #F5F5F5;
+}
+
+.content-container3 {
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.wrap-content {
+    width:90%;
+    /*width: 1220px;*/
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.wrap-content-title {
+    height: 150px;
+    text-align: center;
+    padding-top: 80px;
+}
+
+.wrap-content-title-p {
+    font-size: 36px;
+    font-weight: 500;
+    color: #333
+}
+
+.wrap-content-title-span {
+    display: inline-block;
+    height: 1px;
+    width: 60px;
+    background-color: #d8d8d8;
+    vertical-align: middle;
+    margin: 0 30px
+}
+
+.wrap-content-title-side-p {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #999
+}
+
+.yqlj {
+    color: #666;
+    font-size: 16px;
+    padding: 1em 0 1em 15px
+}
+
+.yqljul li {
+    display: inline-block;
+    padding-left: 5px
+}
+
+.yqljul li a {
+    color: #666;
+    font-size: 15px
+}
+
+.yqljul li a:hover {
+    color: green;
+}
+
+.footer {
+    background: #2d3236
+}
+
+.footer-content {
+    width: 1200px;
+    margin: auto
+}
+
+.footer-con {
+    width: 100%;
+    height: 190px;
+    padding-top: 30px
+}
+
+.footer-l {
+    width: 28%;
+    float: left
+}
+
+.footer-m {
+    width: 50%;
+    float: left;
+    padding-left: 50px;
+    padding-right: 50px
+}
+
+.footer-r {
+    width: 10%;
+    float: left
+}
+
+.footer-l-title {
+    color: #fff;
+    font-size: 16px;
+    padding-bottom: 20px;
+    letter-spacing: 3px
+}
+
+.footer-l-lx div {
+    color: #aaa;
+    font-size: 14px;
+    padding: 12px 0
+}
+
+.footer-m ul li {
+    float: left;
+    margin: 12px 0
+}
+
+.footer-m ul li a {
+    color: #aaa;
+    padding-right: 20px
+}
+
+.footer-m ul li a:hover {
+    color: green;
+}
+
+.footer-m img {
+    height: 130px
+}
+
+.footer-r img {
+    height: 130px
+}
+
+.footer-copyright {
+    background: #282d32;
+    height: 36px;
+    text-align: center;
+    color: #aaa
+}
+
+.footer-copyright p {
+    padding-top: 10px
+}
+
+.footer-copyright p a {
+    color: #aaa
+}
+
+.footer-copyright p a:hover {
+    color: green;
+}
+
+#loginDiv {
+    width: 350px;
+    margin: 0 auto;
+    padding: 0 15px;
+    /*position: relative*/
+}
+
+.layui-input-block {
+    margin-left: 60px !important;
+    min-height: 36px;
+}
+
+.layui-form-label {
+    width: 30px !important;
+}
+
+.my-banner {
+    position: relative;
+}
+
+.banner-img {
+    position: absolute;
+}
+
+.banner-msg {
+    position: absolute;
+    color: white;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 600px;
+    height: 100px;
+    margin: auto;
+    text-align: center;
+}
+
+.person-show {
+    padding: 10px 10px;
+}
+
+.person-show p {
+    text-align: center;
+}
+
+.person-show a:hover {
+    color:green;
+    font-weight: bold;
+}
+
+.person-show p>span:first-child {
+    color: #888;
+    line-height: 2.2em;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 2px;
+    cursor: inherit;
+    font-weight: normal;
+}
+
+.person-show span {
+    color: black;
+}
+
+.person-show span:hover {
+    color:green;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+p.p-indent {
+    text-indent: 2em;
+}

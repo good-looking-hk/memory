@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>管理员后台</title>
+    <link rel="stylesheet" href="/libs/layui/css/layui.css"/>
+    <style>
+        .layui-btn {
+            line-height: inherit !important;
+        }
+    </style>
+    <script src="/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/libs/layui/layui.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">音乐管理后台</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img"/>
+                    <font th:text="${session.user.username}"></font>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-this"><a href="">音乐管理</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table id="demo" lay-filter="test"></table>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<div id="editN" class="layui-form layui-tab-content" style="padding: 20px 20px;" hidden="">
+    <div class="layui-tab-item layui-show">
+        <div class="layui-form">
+            <form id="editSubmit">
+                <input name="id" id="iD" hidden>
+                <div class="layui-form-item">
+                    <label for="L_email1" class="layui-form-label">歌曲名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" id="L_email1" required lay-verify="required"
+                               autocomplete="off"
+                               placeholder="新的歌曲名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label">作者</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="L_username" name="author" required lay-verify="required"
+                               autocomplete="off" placeholder="新的创作者" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_pass1" class="layui-form-label">发行年份</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="L_pass1" name="year" required lay-verify="number"
+                               autocomplete="off"
+                               placeholder="新的年份" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="edit()">确认修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="add">添加</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script th:inline="javascript">
+    layui.use(['table', 'form', 'element'], function () {
+        var table = layui.table, form = layui.form, layer = layui.layer;
+        var editId;
+        var tableIns = table.render({
+            elem: '#demo'
+            , height: 500
+            , width: 1350
+            , url: '/music/all' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'id', title: '音乐ID', width: 100, sort: true, fixed: 'left'}
+                , {field: 'name', title: '音乐名', width: 140}
+                , {field: 'author', title: '作者', width: 160}
+                , {field: 'year', title: '年份', width: 120}
+                , {field: 'uploadTime', title: '上传时间', width: 240, sort: true}
+                , {field: '操作', width: 250, align: 'center', toolbar: '#barDemo'}
+            ]]
+        });
+        //监听工具条
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            editId = obj.data.id;
+            $("#iD").val(editId);
+            if (obj.event === 'add') {
+                layer.open({
+                    type: 2,
+                    title: '上传音乐',
+                    area: ['600px', '500px'],
+                    content: '/html/upload.html'
+                });
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除该音乐吗？', function (index) {
+                    $.post('/music/del', {id: data.id}, function (response) {
+                        if (response.code == 200) {
+                            layer.msg('删除成功', {icon: 1, time: 1500});
+                            obj.del();
+                        } else {
+                            layer.msg(response.msg, {icon: 2, time: 1500});
+                        }
+                    });
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.open({
+                    type: 1,
+                    title: '修改音乐信息',
+                    area: ['600px', '500px'],
+                    content: $('#editN')
+                });
+            }
+        });
+    });
+    function edit () {
+        $.ajax({
+            type: "post",
+            url: "/music/edit",
+            data: $('#editSubmit').serialize(),
+        }).success(function(message) {
+            layer.msg("修改成功");
+            console.log(message);
+        }).fail(function(err){
+            console.log(err);
+            layer.msg("修改失败");
+        });
+        return false;
+    }
+</script>
+</body>
+<html>

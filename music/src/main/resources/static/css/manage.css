@@ -1,0 +1,10 @@
+body {
+    font-family: 微软雅黑, Source Sans, "Microsoft YaHei UI", Arial, 宋体;
+    overflow:scroll;
+    overflow-y:hidden;
+    overflow-x:hidden;
+}
+
+/*[v-cloak] {*/
+    /*display: none;*/
+/*}*/
